@@ -10,7 +10,7 @@ int main()
     int numeroAtualAlunos = 0;
     int numeroAtualProfessores = 0;
     int numeroAtualDisciplinas = 0;
-    while (func != 7 && func != EOF)
+    while (func != 8 && func != EOF)
     {
         printf("Bem vindo ao Projeto Escola! Digite o que deseja fazer: \n");
         printMenu();
@@ -19,20 +19,14 @@ int main()
         
         switch (func)
         {
-            case 1: ;
-                struct Pessoa novoAluno = cadastrarAluno();
-                alunos[numeroAtualAlunos] = novoAluno;
-                ++numeroAtualAlunos;
+            case 1: 
+                cadastrarExcluirAluno(alunos, &numeroAtualAlunos);
                 break;
-            case 2: ;
-                struct Pessoa novoProfessor = cadastrarProfessor();
-                professores[numeroAtualProfessores] = novoProfessor;
-                ++numeroAtualProfessores;
+            case 2: 
+                cadastrarExcluirProfessor(professores, &numeroAtualProfessores);
                 break;
-            case 3: ;
-                struct Disciplina novaDisciplina = cadastrarDisciplina();
-                disciplinas[numeroAtualDisciplinas] = novaDisciplina;
-                ++numeroAtualDisciplinas;
+            case 3: 
+                cadastrarExcluirDisciplina(disciplinas, &numeroAtualDisciplinas);
                 break;
             case 4:
                 listarAlunos(alunos, numeroAtualAlunos);
@@ -44,6 +38,9 @@ int main()
                 listarDisciplinas(disciplinas, numeroAtualDisciplinas);
                 break;
             case 7:
+                matricularAlunoNumaDisciplina(alunos, disciplinas, &numeroAtualAlunos, &numeroAtualDisciplinas);
+                break;
+            case 8:
                 printf("Tchau!\n");
                 return 0;
                 break;
@@ -54,4 +51,3 @@ int main()
     }
     return 0;
 }
-
