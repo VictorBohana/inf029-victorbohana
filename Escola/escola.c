@@ -10,6 +10,8 @@ int main()
     int numeroAtualAlunos = 0;
     int numeroAtualProfessores = 0;
     int numeroAtualDisciplinas = 0;
+    int geradorDeMatriculas = 0;
+    int geradorDeIdDisciplina = 0;
     while (func != 8 && func != EOF)
     {
         printf("Bem vindo ao Projeto Escola! Digite o que deseja fazer: \n");
@@ -20,13 +22,13 @@ int main()
         switch (func)
         {
             case 1: 
-                cadastrarExcluirAluno(alunos, &numeroAtualAlunos);
+                cadastrarExcluirAluno(alunos, &numeroAtualAlunos, &geradorDeMatriculas);
                 break;
             case 2: 
                 cadastrarExcluirProfessor(professores, &numeroAtualProfessores);
                 break;
             case 3: 
-                cadastrarExcluirDisciplina(disciplinas, &numeroAtualDisciplinas);
+                cadastrarExcluirDisciplina(disciplinas, &numeroAtualDisciplinas, professores, &numeroAtualProfessores, &geradorDeIdDisciplina);
                 break;
             case 4:
                 listarAlunos(alunos, numeroAtualAlunos);
@@ -35,7 +37,7 @@ int main()
                 listarProfessores(professores, numeroAtualProfessores);
                 break;
             case 6:
-                listarDisciplinas(disciplinas, numeroAtualDisciplinas);
+                listarDisciplinas(disciplinas, numeroAtualDisciplinas, alunos, numeroAtualAlunos);
                 break;
             case 7:
                 matricularAlunoNumaDisciplina(alunos, disciplinas, &numeroAtualAlunos, &numeroAtualDisciplinas);
@@ -43,7 +45,6 @@ int main()
             case 8:
                 printf("Tchau!\n");
                 return 0;
-                break;
             default:
                 printf("Funcionalidade não reconhecida.\n");
                 break;
