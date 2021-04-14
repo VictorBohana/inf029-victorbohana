@@ -50,3 +50,4 @@ void matricularAlunoNumaDisciplina(struct Pessoa *alunos, struct Disciplina *dis
     int* numeroAlunos, int* numeroDisciplinas);
 void desmatricularAlunoDisciplina(struct Pessoa *alunos, struct Disciplina *disciplinas, 
     int* numeroAlunos, int* numeroDisciplinas);
+void modificarDisciplinaExistente(struct Disciplina* disciplinas, int* numeroDisciplinas, struct Pessoa* professores, int numeroProfessores);

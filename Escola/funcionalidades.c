@@ -404,6 +404,8 @@ void cadastrarExcluirDisciplina(struct Disciplina *disciplinas, int* numeroDisci
     case 2:
         excluirDisciplina(disciplinas, numeroDisciplinas);
         break;
+    case 3:
+        modificarDisciplinaExistente(disciplinas, &numeroDisciplinas, professores, *numeroProfessores);
     default:
         break;
     }
@@ -794,6 +796,76 @@ struct Disciplina cadastrarDisciplina(struct Pessoa* professores, int numeroProf
     system("clear");
     novaDisciplina.numeroAlunosInscritos = 0;
     return novaDisciplina;
+}
+
+void modificarDisciplinaExistente(struct Disciplina* disciplinas, int* numeroDisciplinas, struct Pessoa* professores, int numeroProfessores)
+{
+
+    if(*numeroDisciplinas == 0)
+    {
+        printf("Nao existem disciplinas para serem modificadas.");
+        printf("Pressione enter para continuar...");
+        getchar();
+        return;
+    }
+
+    system("clear");
+    for(int i = 0; i < *numeroDisciplinas; i++)
+    {
+        printf("%d. %s", i + 1, disciplinas[i].nome);
+    }
+    int codigoDisciplina = 0, c;
+    struct Disciplina novosDadosDisciplina;
+    while(codigoDisciplina < 1 || codigoDisciplina > *numeroDisciplinas)
+    {
+        printf("Digite o codigo da disciplina que deseja modificar: ");
+        scanf("%d", &codigoDisciplina);
+    }
+    while ( (c = getchar()) != '\n' && c != EOF );
+    codigoDisciplina -= 1;
+
+    printf("Digite o nome da disciplina: ");
+    fgets(novosDadosDisciplina.nome, sizeof(novosDadosDisciplina.nome), stdin);
+
+    printf("Digite o codigo da disciplina: ");
+    fgets(novosDadosDisciplina.codigo, sizeof(novosDadosDisciplina.codigo), stdin);
+
+    printf("Digite o semestre da disciplina: ");
+    scanf("%d", novosDadosDisciplina.semestre);
+    while ( (c = getchar()) != '\n' && c != EOF );
+
+    int codigoProfessor = 0;
+    for(int i = 0; i < numeroProfessores; i++)
+    {
+        printf("%d. %s\n", i + 1, professores[i].nome);
+    }
+
+    while(codigoProfessor < 1 || codigoProfessor > numeroProfessores)
+    {
+        printf("\nDigite o codigo do professor da nova disciplina: ");
+        scanf("%d", &codigoProfessor);
+    }
+    while ( (c = getchar()) != '\n' && c != EOF );
+
+
+    for(int i = 0; i < 21; i++)
+    {
+       disciplinas[codigoDisciplina].professor.nome[i] = professores[codigoProfessor - 1].nome[i];
+    }
+
+
+    for(int i = 0; i < 21; i++)
+    {
+        disciplinas[codigoDisciplina].nome[i] = novosDadosDisciplina.nome[i];
+    }
+
+    for(int i = 0; i < 12; i++)
+    {
+        disciplinas[codigoDisciplina].codigo[i] = novosDadosDisciplina.codigo[i];
+    }
+
+    printf("Disciplina atualizada com sucesso.\nPressione ENTER para continuar...");
+    getchar();
 }
 
 void excluir(struct Pessoa *individuos, int* numeroIndividuos)
