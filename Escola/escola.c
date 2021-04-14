@@ -12,7 +12,7 @@ int main()
     int numeroAtualDisciplinas = 0;
     int geradorDeMatriculas = 0;
     int geradorDeIdDisciplina = 0;
-    while (func != 8 && func != EOF)
+    while (func != 9 && func != EOF)
     {
         printf("Bem vindo ao Projeto Escola! Digite o que deseja fazer: \n");
         printMenu();
@@ -43,6 +43,9 @@ int main()
                 matricularAlunoNumaDisciplina(alunos, disciplinas, &numeroAtualAlunos, &numeroAtualDisciplinas);
                 break;
             case 8:
+                desmatricularAlunoDisciplina(alunos, disciplinas, &numeroAtualAlunos, &numeroAtualDisciplinas);
+                break;
+            case 9:
                 printf("Tchau!\n");
                 return 0;
             default:

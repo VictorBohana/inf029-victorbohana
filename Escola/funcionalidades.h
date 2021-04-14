@@ -48,3 +48,5 @@ void excluir(struct Pessoa *individuos, int* numeroIndividuos);
 void excluirDisciplina(struct Disciplina *disciplinas, int* numeroDisciplinas);
 void matricularAlunoNumaDisciplina(struct Pessoa *alunos, struct Disciplina *disciplinas, 
     int* numeroAlunos, int* numeroDisciplinas);
+void desmatricularAlunoDisciplina(struct Pessoa *alunos, struct Disciplina *disciplinas, 
+    int* numeroAlunos, int* numeroDisciplinas);

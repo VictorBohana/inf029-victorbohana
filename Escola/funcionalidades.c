@@ -4,7 +4,7 @@
 void printMenu()
 { 
     system("clear");
-    printf("1 - Cadastrar/excluir/atualizar um aluno\n2 - Cadastrar/excluir/atualizar um  professor\n3 - Cadastrar/excluir/atualizar uma disciplina\n4 - Listar alunos\n5 - Listar professores\n6 - Listar disciplinas\n7 - Matricular aluno numa disciplina\n8 - Sair do aplicativo.\n");
+    printf("1 - Cadastrar/excluir/atualizar um aluno\n2 - Cadastrar/excluir/atualizar um  professor\n3 - Cadastrar/excluir/atualizar uma disciplina\n4 - Listar alunos\n5 - Listar professores\n6 - Listar disciplinas\n7 - Matricular aluno numa disciplina\n8 - Desmatricular aluno duma disciplina\n9 - Sair\n");
 }
 
 void printMenuCadastrarExcluirAluno(){
@@ -29,14 +29,14 @@ void printMenuListarAlunos()
 {
     system("clear");
     printf("Escolha como deseja listar os alunos:\n");
-    printf("1 - Listar todos os alunos\n2 - Listar alunos por sexo\n3 - Listar alunos ordenados por nome\n4 - Listar alunos ordenados por data de nascimento\n5 - Voltar ao menu anterior\n");
+    printf("1 - Listar todos os alunos\n2 - Listar alunos por sexo\n3 - Listar alunos ordenados por data de nascimento\n4 - Listar alunos matriculados em menos de 3 disciplinas\n5 - Voltar ao menu anterior\n");
 }
 
 void printMenuListarProfessores()
 {
     system("clear");
     printf("Escolha como deseja listar os professores:\n");
-    printf("1 - Listar todos os professores\n2 - Listar professores por sexo\n3 - Listar professores ordenados por nome\n4 - Listar professores ordenados por data de nascimento\n5 - Voltar ao menu anterior\n");
+    printf("1 - Listar todos os professores\n2 - Listar professores por sexo\n3 - Listar professores ordenados por data de nascimento\n4 - Voltar ao menu anterior\n");
 }
 
 void printMenuListarDisciplinas()
@@ -106,9 +106,18 @@ void listarAlunos(struct Pessoa* alunos, int quantidadeAlunos)
             system("clear");
             break;
         case 3:
+            listarAlunosPorIdade(alunos, quantidadeAlunos);
             break;
         case 4:
-            listarAlunosPorIdade(alunos, quantidadeAlunos);
+            for(int i = 0; i < quantidadeAlunos; i++)
+            {
+                if(alunos[i].numeroDeDisciplinas < 3)
+                {
+                    printf("%s", alunos[i].nome);
+                }
+            }
+            break;
+        case 5:
             break;
         default:
             break;
@@ -209,6 +218,8 @@ void listarProfessores(struct Pessoa* professores, int quantidadeProfessores)
             break;
         case 3:
             listarProfessoresPorIdade(professores, quantidadeProfessores);
+            break;
+        case 4:
             break;
         default:
             break;
@@ -408,8 +419,11 @@ struct Pessoa cadastrarAluno(int geradorDeMatriculas)
 
     novoAluno.matricula = geradorDeMatriculas + 1;
 
-    printf("Digite o sexo do novo aluno (M/F): ");
-    scanf(" %c", &novoAluno.sexo);
+    while(novoAluno.sexo != 'M' || novoAluno.sexo != 'm' || novoAluno.sexo != 'F' || novoAluno.sexo != 'f')
+    {
+        printf("Digite o sexo do novo aluno (M/F): ");
+        scanf(" %c", &novoAluno.sexo);
+    }
     while ( (c = getchar()) != '\n' && c != EOF );
 
     printf("Digite o dia (1-31) de nascimento do novo aluno: ");
@@ -466,6 +480,15 @@ struct Pessoa cadastrarAluno(int geradorDeMatriculas)
 
 void modificarAlunoExistente(struct Pessoa* alunos, int* numeroAlunos)
 {
+
+    if(*numeroAlunos == 0)
+    {
+        printf("Nao existem alunos para serem modificados.");
+        printf("Pressione enter para continuar...");
+        getchar();
+        return;
+    }
+
     system("clear");
     for(int i = 0; i < *numeroAlunos; i++)
     {
@@ -484,8 +507,11 @@ void modificarAlunoExistente(struct Pessoa* alunos, int* numeroAlunos)
     printf("Digite o nome do novo aluno: ");
     fgets(novosDadosAluno.nome, sizeof(novosDadosAluno.nome), stdin);
 
-    printf("Digite o sexo do aluno (M/F): ");
-    scanf(" %c", &novosDadosAluno.sexo);
+    while(novosDadosAluno.sexo != 'M'|| novosDadosAluno.sexo != 'm' || novosDadosAluno.sexo != 'F' || novosDadosAluno.sexo != 'f')
+    {
+        printf("Digite o sexo do aluno (M/F): ");
+        scanf(" %c", &novosDadosAluno.sexo);
+    }
     while ( (c = getchar()) != '\n' && c != EOF );
 
     printf("Digite a dia (1-31) de nascimento do aluno: ");
@@ -563,8 +589,11 @@ struct Pessoa cadastrarProfessor(int numProfessores)
 
     novoProfessor.matricula = numProfessores + 1;
 
-    printf("Digite o sexo do novo professor (M/F): ");
-    scanf("%c", &novoProfessor.sexo);
+    while(novoProfessor.sexo != 'M' ||  novoProfessor.sexo != 'm' || novoProfessor.sexo != 'F' || novoProfessor.sexo != 'f')
+    {
+        printf("Digite o sexo do novo professor (M/F): ");
+        scanf("%c", &novoProfessor.sexo);
+    }
     while ( (c = getchar()) != '\n' && c != EOF );
 
     printf("Digite o dia de nascimento do novo professor (1-31): ");
@@ -595,7 +624,7 @@ struct Pessoa cadastrarProfessor(int numProfessores)
         while ( (c = getchar()) != '\n' && c != EOF );
     }
 
-    printf("Digite o ano de nascimento do novo professor: ");
+    printf("Digite o ano de nascimento do novo professor (1930-2020): ");
     scanf("%d", &novoProfessor.dataNascimento.ano);
     while ( (c = getchar()) != '\n' && c != EOF );
 
@@ -618,6 +647,15 @@ struct Pessoa cadastrarProfessor(int numProfessores)
 
 void modificarProfessorExistente(struct Pessoa* professores, int* numeroProfessores)
 {
+
+    if(*numeroProfessores == 0)
+    {
+        printf("Nao existem professores para serem modificados.");
+        printf("Pressione enter para continuar...");
+        getchar();
+        return;
+    }
+
     system("clear");
     for(int i = 0; i < *numeroProfessores; i++)
     {
@@ -636,8 +674,11 @@ void modificarProfessorExistente(struct Pessoa* professores, int* numeroProfesso
     printf("Digite o nome do professor: ");
     fgets(novosDadosProfessor.nome, sizeof(novosDadosProfessor.nome), stdin);
 
-    printf("Digite o sexo do professor: ");
-    scanf(" %c", &novosDadosProfessor.sexo);
+    while(novosDadosProfessor.sexo != 'M' || novosDadosProfessor.sexo != 'm' || novosDadosProfessor.sexo != 'F' || novosDadosProfessor.sexo != 'f')
+    {
+        printf("Digite o sexo do professor (M/F): ");
+        scanf(" %c", &novosDadosProfessor.sexo);
+    }
     while ( (c = getchar()) != '\n' && c != EOF );
 
     printf("Digite o dia (1-31) de nascimento do professor: ");
@@ -707,7 +748,16 @@ void modificarProfessorExistente(struct Pessoa* professores, int* numeroProfesso
 
 struct Disciplina cadastrarDisciplina(struct Pessoa* professores, int numeroProfessores, int idDisciplina)
 {
-    system("clear");   
+    system("clear");
+
+    if(numeroProfessores == 0)
+    {   
+        printf("Nao existem professores ainda para que a disciplina possa ser cadastrada.");
+        printf("Pressione enter para continuar...");
+        getchar();
+        return;
+    }
+
     int c;
     struct Disciplina novaDisciplina;
     int codigoProfessor = 0;
@@ -811,7 +861,6 @@ void matricularAlunoNumaDisciplina(struct Pessoa *alunos, struct Disciplina *dis
     int* numeroAlunos, int* numeroDisciplinas){
 
         system("clear");
-        printf("Digite o numero do aluno que voce deseja matricular numa disciplina: \n");
 
         if(*numeroAlunos == 0)
         {
@@ -828,7 +877,8 @@ void matricularAlunoNumaDisciplina(struct Pessoa *alunos, struct Disciplina *dis
             getchar();
             return;
         }
-
+        
+        printf("Digite o numero do aluno que voce deseja matricular numa disciplina: \n");
         for(int i = 0; i < *numeroAlunos; i++)
         {
             printf("%d. %s\n", i + 1, alunos[i].nome);
@@ -888,4 +938,102 @@ void matricularAlunoNumaDisciplina(struct Pessoa *alunos, struct Disciplina *dis
         printf("Pressione enter para continuar...");
         getchar();
         system("clear");
+}
+
+void desmatricularAlunoDisciplina(struct Pessoa *alunos, struct Disciplina *disciplinas, 
+    int* numeroAlunos, int* numeroDisciplinas){
+
+    if(*numeroAlunos == 0)
+    {
+        printf("Nenhum aluno cadastrado no sistema.\n");
+        printf("Pressione enter para continuar...");
+        getchar();
+        return;
+    }
+
+    if(*numeroDisciplinas == 0)
+    {
+        printf("Nenhuma disciplina cadastrada no sistema.\n");
+        printf("Pressione enter para continuar...");
+        getchar();
+        return;
+    }
+    
+    int codigoAluno = 0, c;
+
+    for(int i = 0; i < *numeroAlunos; i++)
+    {
+        printf("%d. %s", i + 1, alunos[i].nome);
+    }
+    
+    while(codigoAluno <= 0 || codigoAluno > *numeroAlunos)
+    {
+        printf("Digite o codigo do aluno que deseja desmatricular de uma disciplina: ");
+        scanf("%d", &codigoAluno);
+    }
+    while ( (c = getchar()) != '\n' && c != EOF );
+
+    codigoAluno = codigoAluno - 1;
+
+    if(alunos[codigoAluno].numeroDeDisciplinas == 0)
+    {
+        printf("Aluno não esta matriculado em nenhuma disciplina.\nPressione ENTER para continuar...");
+        getchar();
+        system("clear");
+        return;
+    }
+
+    int codigoDisciplina = 0;
+    int codigosDisciplinasAluno[5];
+    int contador = 0;
+    for(int i = 0; i < alunos[codigoAluno].numeroDeDisciplinas; i++)
+    {
+        for(int j = 0; j < *numeroDisciplinas; j++)
+        {
+            if(disciplinas[j].id == alunos[codigoAluno].cursando[i])
+            {
+                codigosDisciplinasAluno[contador] = disciplinas[j].id;
+                contador++;
+                printf("%d. %s\n", contador, disciplinas[j].nome);
+            }
+        }
+    }
+
+    while(codigoDisciplina < 1 || codigoDisciplina > alunos[codigoAluno].numeroDeDisciplinas)
+    {
+        printf("Digite o codigo da disciplina que voce deseja desmatricular o aluno: ");
+        scanf("%d", &codigoDisciplina);
+    }
+    while ( (c = getchar()) != '\n' && c != EOF );
+    codigoDisciplina = codigoDisciplina - 1;
+
+    for(int i = 0; i < *numeroDisciplinas; i++)
+    {
+        if(disciplinas[i].id == codigosDisciplinasAluno[codigoDisciplina])
+        {
+        for(int j = 0; j < disciplinas[i].numeroAlunosInscritos; j++)
+        {
+            if(disciplinas[i].alunosMatriculados[j] == alunos[codigoAluno].matricula)
+            {
+                for(int k = j; k < disciplinas[i].numeroAlunosInscritos; k++)
+                {
+                    disciplinas[i].alunosMatriculados[k] = disciplinas[i].alunosMatriculados[k + 1];
+                }
+                disciplinas[i].numeroAlunosInscritos = disciplinas[i].numeroAlunosInscritos - 1;
+            }
+        }
+        }
+    }
+
+    for(int i = codigoDisciplina - 1; i < alunos[codigoAluno].numeroDeDisciplinas; i++)
+    { 
+        alunos[codigoAluno].cursando[i] = alunos[codigoAluno].cursando[i + 1];
+    } 
+
+    alunos[codigoAluno].numeroDeDisciplinas = alunos[codigoAluno].numeroDeDisciplinas - 1;
+
+    printf("Aluno removido da disciplina com sucesso.\n");
+    printf("Pressione enter para continuar...");
+    getchar();
+    system("clear");
 }
