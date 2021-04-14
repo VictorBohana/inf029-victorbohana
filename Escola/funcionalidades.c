@@ -847,6 +847,7 @@ void modificarDisciplinaExistente(struct Disciplina* disciplinas, int* numeroDis
     }
     while ( (c = getchar()) != '\n' && c != EOF );
 
+    disciplinas[codigoDisciplina].semestre = novosDadosDisciplina.semestre;
 
     for(int i = 0; i < 21; i++)
     {
