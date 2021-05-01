@@ -374,65 +374,54 @@ int calcularPotencia(int expoente)
     return base;
 }
 
-int q5(int num)
+void separarNumeros(int numero, int* array)
 {
-    if(num < 10)
+    if(numero < 10)
     {
-        return num;
+        array[0] = numero;
+        return;
     }
     else
     {
-        int numerosIsolados[50];
-        for(int i = 0; i < 50; i++) numerosIsolados[i] = -1;
-
         int algarismo = 0;
-        //pega ultimo numero
-        algarismo = num % 10;
-        numerosIsolados[0] = algarismo;
-        num = num - algarismo;
-        // printf("%d\n", num);
+        algarismo = numero % 10;
+        array[0] = algarismo;
+        numero = numero - algarismo;
 
-        // algarismo = num % (10 ^ 2);
-        // printf("%d\n", algarismo);
-
-        // num = num - (algarismo * 10);
-        // printf("%d\n", num);
-
-        // algarismo = num % (10 ^ 3);
-        // printf("%d\n", algarismo);
-
-        // num = num - (algarismo * 100);
-        // printf("%d\n", num);
-
-        for(int i = 2; num > 0; i++)
+        for(int i = 2; numero > 0; i++)
         {
             int potencia = calcularPotencia(i);
-            algarismo = num % (potencia);
+            algarismo = numero % (potencia);
             int potencia2 = calcularPotencia(i - 1);
 
             algarismo = algarismo / potencia2;
 
-            numerosIsolados[i - 1] = algarismo;
-            num = num - (algarismo * (potencia / 10));
+            array[i - 1] = algarismo;
+            numero = numero - (algarismo * (potencia / 10));
         }
+    }
+}
 
-        int quantidadeDeAlgarismos = 0;
-        for(int i = 0; numerosIsolados[i] != -1; i++) ++quantidadeDeAlgarismos;
+int q5(int num)
+{
+    int numerosIsolados[50];
+    for(int i = 0; i < 50; i++) numerosIsolados[i] = -1;
 
-        quantidadeDeAlgarismos = quantidadeDeAlgarismos - 1;
-        int numeroInvertido = 0;
-        for(int j = quantidadeDeAlgarismos; j >= 0; j--)
-        {
-            int potencia = calcularPotencia(j);
-            if(j != 0) numeroInvertido = numeroInvertido + (numerosIsolados[quantidadeDeAlgarismos - j] * potencia);
+    separarNumeros(num, numerosIsolados);
 
-            if(j == 0) numeroInvertido = numeroInvertido + numerosIsolados[quantidadeDeAlgarismos - j];
-        }
+    int quantidadeDeAlgarismos = 0;
+    for(int i = 0; numerosIsolados[i] != -1; i++) ++quantidadeDeAlgarismos;
+    quantidadeDeAlgarismos = quantidadeDeAlgarismos - 1;
+    int numeroInvertido = 0;
+    for(int j = quantidadeDeAlgarismos; j >= 0; j--)
+    {
+        int potencia = calcularPotencia(j);
+        if(j != 0) numeroInvertido = numeroInvertido + (numerosIsolados[quantidadeDeAlgarismos - j] * potencia);
 
-        return numeroInvertido;
+        if(j == 0) numeroInvertido = numeroInvertido + numerosIsolados[quantidadeDeAlgarismos - j];
     }
 
-    return 0;
+    return numeroInvertido;
 }
 
 /*
@@ -447,30 +436,31 @@ int q5(int num)
 
 int q6(int numerobase, int numerobusca)
 {
+    int numeroBaseIsolado[100];
+    for(int i = 0; i < 100; i++) numeroBaseIsolado[i] = -1;
+
+    int numeroBuscaIsolado[100];
+    for(int i = 0; i < 100; i++) numeroBuscaIsolado[i] = -1;
+
+    separarNumeros(numerobusca, numeroBuscaIsolado);
+    separarNumeros(numerobase, numeroBaseIsolado);
+    
+    int numeroAlgarismosBusca = 0, numeroAlgarismosBase = 0;
+
+    for(int i = 0; numeroBaseIsolado[i] != -1; i++) numeroAlgarismosBase++; 
+    for(int i = 0; numeroBuscaIsolado[i] != -1; i++) numeroAlgarismosBusca++; 
+
     int qtdOcorrencias = 0;
-    char numBaseString[1000], numBuscaString[1000];
-    snprintf(numBaseString, 1000, "%d", numerobase);
-    snprintf(numBuscaString, 1000, "%d", numerobusca);
-
-    int numBaseTam, numBuscaTam;
-    for(numBaseTam = 0; numBaseString[numBaseTam] != '\0'; ++numBaseTam);
-    for(numBuscaTam = 0; numBuscaString[numBuscaTam] != '\0'; ++numBuscaTam);
-
-    int contador = 0;
-    for(int i = 0; i < numBaseTam; ++i)
-    {   
-        for(int j = 0; j < numBuscaTam; ++j)
+    for(int i = 0; i < numeroAlgarismosBase; i++)
+    {
+        int contador = 0;
+        for(int j = 0; j < numeroAlgarismosBusca; j++)
         {
-            if(numBaseString[i + j] == numBuscaString[j]) ++contador;
+            if(numeroBaseIsolado[i + j] == numeroBuscaIsolado[j]) ++contador;
         }
 
-        if(contador == numBuscaTam)
-        {
-            ++qtdOcorrencias;
-            if(numBuscaTam > 1) ++i;
-        }
-
-        contador = 0;
+        if(contador == numeroAlgarismosBusca) { ++qtdOcorrencias; if(numeroAlgarismosBusca > 1) ++i; }
     }
+
     return qtdOcorrencias;
 }
