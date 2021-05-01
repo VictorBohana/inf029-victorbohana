@@ -363,25 +363,76 @@ int q4(char *strTexto, char *strBusca, int posicoes[30])
     Número invertido
  */
 
-int q5(int num)
+int calcularPotencia(int expoente)
 {
-    char numString[100];
-    snprintf(numString, 100, "%d", num);
-    
-    int tamanho;
-    for(tamanho = 0; numString[tamanho] != '\0'; ++tamanho);
-    if(tamanho == 1) return num;
-
-    tamanho = tamanho - 1;
-
-    char numStringInvertida[100];
-    for(int i = tamanho; i >= 0; --i)
+    int base = 10;
+    for(int i = 0; i < expoente - 1; i++)
     {
-        numStringInvertida[tamanho - i] = numString[i];
+        base *= 10;
     }
 
-    int numInvertido = atoi(numStringInvertida);
-    return numInvertido;
+    return base;
+}
+
+int q5(int num)
+{
+    if(num < 10)
+    {
+        return num;
+    }
+    else
+    {
+        int numerosIsolados[50];
+        for(int i = 0; i < 50; i++) numerosIsolados[i] = -1;
+
+        int algarismo = 0;
+        //pega ultimo numero
+        algarismo = num % 10;
+        numerosIsolados[0] = algarismo;
+        num = num - algarismo;
+        // printf("%d\n", num);
+
+        // algarismo = num % (10 ^ 2);
+        // printf("%d\n", algarismo);
+
+        // num = num - (algarismo * 10);
+        // printf("%d\n", num);
+
+        // algarismo = num % (10 ^ 3);
+        // printf("%d\n", algarismo);
+
+        // num = num - (algarismo * 100);
+        // printf("%d\n", num);
+
+        for(int i = 2; num > 0; i++)
+        {
+            int potencia = calcularPotencia(i);
+            algarismo = num % (potencia);
+            int potencia2 = calcularPotencia(i - 1);
+
+            algarismo = algarismo / potencia2;
+
+            numerosIsolados[i - 1] = algarismo;
+            num = num - (algarismo * (potencia / 10));
+        }
+
+        int quantidadeDeAlgarismos = 0;
+        for(int i = 0; numerosIsolados[i] != -1; i++) ++quantidadeDeAlgarismos;
+
+        quantidadeDeAlgarismos = quantidadeDeAlgarismos - 1;
+        int numeroInvertido = 0;
+        for(int j = quantidadeDeAlgarismos; j >= 0; j--)
+        {
+            int potencia = calcularPotencia(j);
+            if(j != 0) numeroInvertido = numeroInvertido + (numerosIsolados[quantidadeDeAlgarismos - j] * potencia);
+
+            if(j == 0) numeroInvertido = numeroInvertido + numerosIsolados[quantidadeDeAlgarismos - j];
+        }
+
+        return numeroInvertido;
+    }
+
+    return 0;
 }
 
 /*

@@ -37,8 +37,8 @@ int main()
     //testQ2();
     //testQ3();
     //testQ4();
-    //testQ5();
-    testQ6();
+    testQ5();
+    //testQ6();
 }
 
 void testSomar()
@@ -62,19 +62,15 @@ void testQ1()
     char str[11];
     strcpy(str, "29/02/2015");
     printf("%d\n", q1(str) == 1);
-    printf("================\n");
     strcpy(str, "29/02/2012");
     printf("%d\n", q1(str) == 1);
-    printf("================\n");
     strcpy(str, "9/13/2014");
     printf("%d\n", q1(str) == 1);
-    printf("================\n");
     strcpy(str, "45/4/2014");
     printf("%d\n", q1(str) == 1);
-    printf("================\n");
     strcpy(str, "/9/2014");
     printf("%d\n", q1(str) == 1);
-    printf("================\n");
+
 }
 
 void testQ2()
@@ -177,17 +173,11 @@ void testQ4()
 void testQ5()
 {
     printf("%d\n", q5(345) == 543);
-    printf("======\n");
     printf("%d\n", q5(78) == 87);
-    printf("======\n");
     printf("%d\n", q5(3) == 3);
-    printf("======\n");
     printf("%d\n", q5(5430) == 345);
-    printf("======\n");
     printf("%d\n", q5(2135) == 5312);
-    printf("======\n");
     printf("%d\n", q5(6966) == 6696);
-    printf("======\n");
 }
 
 void testQ6()
@@ -199,4 +189,5 @@ void testQ6()
     printf("%d\n", q6(5444, 44) == 1);
     printf("%d\n", q6(54444, 44) == 2);
     printf("%d\n", q6(1234562354, 23) == 2);
+    printf("%d\n", q6(3434, 34) == 2);
 }
