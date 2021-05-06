@@ -11,10 +11,10 @@
 //  O aluno deve preencher seus dados abaixo, e implementar as questões do trabalho
 
 //  ----- Dados do Aluno -----
-//  Nome:
-//  email:
-//  Matrícula:
-//  Semestre:
+//  Nome: Joao Victor Rodrigues Bohana
+//  email: victorbohana@gmail.com
+//  Matrícula: 20192160021
+//  Semestre: 2
 
 //  Copyright © 2016 Renato Novais. All rights reserved.
 // Última atualização: 20/06/2018 - 19/08/2016
@@ -22,6 +22,10 @@
 // #################################################
 
 #include <stdio.h>
+#include <ctype.h>
+#include <stdlib.h>
+#include <wctype.h>
+#include <stddef.h>
 
 /*
 ## função utilizada para testes  ##
@@ -75,18 +79,11 @@ int fatorial(int x)
 typedef struct DQ{
     char sDia[3];
     char sMes[3];
-    char sAno[5];
+    char sAno[4];
     int isValid;
 
 } DataQuebrada;
-// {3,1,/,1,0,/,2,0,0,0}
-// {3,1,/,1,0,/,2,0}
-// {3,1,/,1,/,2,0,0,0}
-// {3,1,/,1,/,2,0}
-// {3,/,1,/,2,0,0,0}
-// {3,/,1,/,2,0}
-// {3,/,1,0,/,2,0,0,0}
-// {3,/,1,0,/,2,0}
+
 DataQuebrada quebraData(char* data){
     DataQuebrada dataQuebrada;
     if(data[2] == '/')
@@ -197,59 +194,37 @@ int validarData(int dia, int mes, int ano)
     if(dia <= 0 || dia > 31) return 0;
     if(mes <= 0 || mes > 12) return 0;
 
-    if(ano % 4 == 0 && ano % 100 != 0 || ano % 400 == 0)
+    switch(mes)
     {
-        switch(mes)
-        {
-            case 1:
-            case 3:
-            case 5:
-            case 7:
-            case 8:
-            case 10:
-            case 12:
-                if(dia <= 31) return 1;
-                
-                break;
-            case 2: 
+        case 1:
+        case 3:
+        case 5:
+        case 7:
+        case 8:
+        case 10:
+        case 12:
+            if(dia <= 31) return 1;
+            break;
+        case 2:
+            if(ano % 4 == 0 && ano % 100 != 0 || ano % 400 == 0)
+            {
                 if(dia <= 29) return 1;
-                break;
-            case 4:
-            case 6:
-            case 9:
-            case 11:
-                if(dia <= 30) return 1;
-                break;
-            default:
-                return 0;
-        }
-    } 
-    else 
-    {
-        switch(mes)
-        {
-            case 1:
-            case 3:
-            case 5:
-            case 7:
-            case 8:
-            case 10:
-            case 12:
-                if(dia <= 31) return 1;
-                break;
-            case 2: 
+            }
+            else 
+            {
                 if(dia <= 28) return 1;
-                break;
-            case 4:
-            case 6:
-            case 9:
-            case 11:
-                if(dia <= 30) return 1;
-                break;
-            default:
-                return 0;
-        }
+            }
+            break;
+        case 4:
+        case 6:
+        case 9:
+        case 11:
+            if(dia <= 30) return 1;
+            break;
+        default:
+            return 0;
     }
+
     return 0;
 }
 
@@ -270,7 +245,6 @@ int q1(char *data)
     datavalida = validarData(iDia, iMes, iAno);
 
     //printf("%s\n", data);
-    printf("%s\n", data);
 
     if (datavalida)
         return 1;
@@ -292,16 +266,72 @@ int q1(char *data)
  */
 int q2(char *datainicial, char *datafinal, int *qtdDias, int *qtdMeses, int *qtdAnos)
 {
+    DataQuebrada dataInicialQ = quebraData(datainicial);
+    DataQuebrada dataFinalQ = quebraData(datafinal);
+
+    int diaInicial, mesInicial, anoInicial, diaFinal, mesFinal, anoFinal;
+
+    diaInicial = atoi(dataInicialQ.sDia);
+    mesInicial = atoi(dataInicialQ.sMes);
+    anoInicial = atoi(dataInicialQ.sAno);
+
+    diaFinal = atoi(dataFinalQ.sDia);
+    mesFinal = atoi(dataFinalQ.sMes);
+    anoFinal = atoi(dataFinalQ.sAno);
+
+    int isDataInicialValida, isDataFinalValida;
+
+    isDataInicialValida = validarData(diaInicial, mesInicial, anoInicial);
+    isDataFinalValida = validarData(diaFinal, mesFinal, anoFinal);
+
+    if(isDataInicialValida == 0) {  
+        return 2;
+    }
+
+    if(isDataFinalValida == 0){ 
+        return 3;
+    }
+
+    if(anoInicial > anoFinal || anoInicial == anoFinal && mesInicial > mesFinal || anoInicial == anoFinal && mesInicial == mesFinal 
+        && diaInicial > diaFinal) return 4;
 
     //calcule os dados e armazene nas três variáveis a seguir
-    int nDias, nMeses, nAnos;
+    int nDias = 0, nMeses = 0, nAnos = 0;
 
-    if (q1(datainicial) == 0)
-        return 2;
-
-    nDias = 4;
-    nMeses = 10;
-    nAnos = 2;
+    nDias = diaFinal - diaInicial;
+    if(nDias < 0)
+    {
+        nMeses = nMeses - 1;
+        switch (mesInicial)
+        {
+            case 1:
+            case 3:
+            case 5:
+            case 7:
+            case 8:
+            case 10:
+            case 12:
+                nDias = nDias + 31;
+                break;
+            case 4:
+            case 6:
+            case 9:
+            case 11:
+                nDias = nDias + 30;
+                break;
+            case 2:
+                if(anoInicial % 4 == 0 && anoInicial % 100 != 0 || anoInicial % 400 == 0)
+                {
+                    nDias = nDias + 29;
+                }
+                else nDias = nDias + 28;
+                break;
+            default:
+                break;
+        }
+    }
+    nMeses = mesFinal - mesInicial;
+    nAnos = anoFinal - anoInicial;
 
     /*mantenha o código abaixo, para salvar os dados em 
     nos parâmetros da funcao
@@ -324,9 +354,47 @@ int q2(char *datainicial, char *datafinal, int *qtdDias, int *qtdMeses, int *qtd
  @saida
     Um número n >= 0.
  */
-int q3(char *texto, char c, int isCaseSensitive)
+
+void removeAcento(wchar_t *texto)
 {
-    int qtdOcorrencias = -1;
+    for(int i = 0; texto[i] != '\0'; i++)
+    {
+        if(texto[i] == L'Á' || texto[i] == L'À' || texto[i] == L'Ã' || texto[i] == L'Â' || texto[i] == L'Ä') texto[i] = 'A';
+        else if(texto[i] == L'á' || texto[i] == L'à' || texto[i] == L'ã' || texto[i] == L'â' || texto[i] == L'ä') texto[i] = 'a';
+        else if(texto[i] == L'É' || texto[i] == L'È' || texto[i] == L'Ẽ' || texto[i] == L'Ê' || texto[i] == L'Ë') texto[i] = 'E';
+        else if(texto[i] == L'é' || texto[i] == L'è' || texto[i] == L'ẽ' || texto[i] == L'ê' || texto[i] == L'ë') texto[i] = 'e';
+        else if(texto[i] == L'Í' || texto[i] == L'Ì' || texto[i] == L'Ĩ' || texto[i] == L'Î' || texto[i] == L'Ï') texto[i] = 'I';
+        else if(texto[i] == L'í' || texto[i] == L'ì' || texto[i] == L'ĩ' || texto[i] == L'î' || texto[i] == L'ï') texto[i] = 'i';
+        else if(texto[i] == L'Ó' || texto[i] == L'Ò' || texto[i] == L'Õ' || texto[i] == L'Ô' || texto[i] == L'Ö') texto[i] = 'O';
+        else if(texto[i] == L'ó' || texto[i] == L'ò' || texto[i] == L'õ' || texto[i] == L'ô' || texto[i] == L'ö') texto[i] = 'o';
+        else if(texto[i] == L'Ú' || texto[i] == L'Ù' || texto[i] == L'Ũ' || texto[i] == L'Û' || texto[i] == L'Ü') texto[i] = 'U';
+        else if(texto[i] == L'ú' || texto[i] == L'ù' || texto[i] == L'ũ' || texto[i] == L'û' || texto[i] == L'ü') texto[i] = 'u';
+        else if(texto[i] == L'Ç') texto[i] = 'C';
+        else if(texto[i] == L'ç') texto[i] = 'c';
+    }
+}
+
+int q3(wchar_t *texto, wchar_t c, int isCaseSensitive)
+{
+    removeAcento(texto);
+    removeAcento(&c);
+
+    int qtdOcorrencias = 0;
+
+    if(!isCaseSensitive){
+        c = towlower(c);
+
+        for(int i = 0; texto[i] != '\0'; i++)
+        {
+            if(towlower(texto[i]) == c) ++qtdOcorrencias;
+        }
+    }
+    else if(isCaseSensitive){
+        for(int i = 0; texto[i] != '\0'; i++)
+        {
+            if(texto[i] == c) ++qtdOcorrencias; 
+        }
+    }
 
     return qtdOcorrencias;
 }
@@ -346,9 +414,34 @@ int q3(char *texto, char c, int isCaseSensitive)
         O retorno da função, n, nesse caso seria 1;
 
  */
-int q4(char *strTexto, char *strBusca, int posicoes[30])
+int q4(wchar_t *strTexto, wchar_t *strBusca, int posicoes[30])
 {
-    int qtdOcorrencias = -1;
+    int qtdOcorrencias = 0;
+    removeAcento(strTexto);
+    removeAcento(strBusca);
+
+    int strBuscaLen = 0;
+    int posicoesIndex = 0;
+    for(int i = 0; strBusca[i] != '\0'; i++) {
+        strBuscaLen++;
+    }
+
+    for(int i = 0; strTexto[i] != '\0'; i++)
+    {
+        int contador = 0;
+        for(int j = 0; j < strBuscaLen + 1; j++)
+        {
+            if(strTexto[i + j] == strBusca[j]) contador++;
+        }
+
+        if(contador == strBuscaLen)
+        {
+            qtdOcorrencias++;
+            posicoes[posicoesIndex] = i + 1;
+            posicoes[posicoesIndex + 1] = i + strBuscaLen;
+            posicoesIndex = posicoesIndex + 2;
+        }
+    }
 
     return qtdOcorrencias;
 }
