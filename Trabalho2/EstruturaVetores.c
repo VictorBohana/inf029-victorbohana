@@ -416,8 +416,8 @@ Objetivo: retorna os números da lista enceada com cabeçote armazenando em veto
 Retorno void
 */
 
-void getDadosListaEncadeadaComCabecote(No* inicio, int vetorAux[]){
-    for(int i = 0; inicio != NULL; i++)
+void getDadosListaEncadeadaComCabecote(No* inicio, int vetorAux[], int tamanhoVet){
+    for(int i = 0; i < tamanhoVet; i++)
     {
         vetorAux[i] = inicio->conteudo;
         inicio = inicio->prox;

@@ -261,8 +261,9 @@ void testeListaEncadeada()
 {
     show_log("testeListaEncadeada()");
     int vet[10];
+    int tamanhoVet = 10;
     No *inicio = montarListaEncadeadaComCabecote();
-    getDadosListaEncadeadaComCabecote(inicio, vet);
+    getDadosListaEncadeadaComCabecote(inicio, vet, tamanhoVet);
 
     printf("%d\n", vet[0] == 3);
     printf("%d\n", vet[1] == 4);
