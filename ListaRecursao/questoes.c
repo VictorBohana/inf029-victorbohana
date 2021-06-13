@@ -48,3 +48,72 @@ int questao6(int k, int n){
         return k * questao6(k, n - 1);
     }
 }
+
+void questao7(double *vetor, int contador){
+    double aux;
+    if(contador < 100)
+    {
+        aux = vetor[contador];
+        vetor[contador] = vetor[99 - contador];
+        vetor[99 - contador] = aux;
+        questao7(vetor, contador + 1);
+    }
+}
+
+void questao10(int num, int numBusca, int *numOcorrencias){
+    if(num == 0) return 0;
+    else{
+        if(num % 10 == numBusca){
+            *numOcorrencias++;
+        }
+        num = num / 10;
+        return questao10(num, numBusca, numOcorrencias);
+    }
+}
+
+int questao11(int multiplicando, int multiplicador) {
+	if(multiplicando == 0 || multiplicador == 0){
+        return 0;
+    }
+	else{
+        if(multiplicador > 0){
+            return multiplicando + questao11(multiplicando, multiplicador - 1);
+        }
+    }	
+}
+
+void questao12(int num) {
+	if(num > 0){
+        questao12(num - 1);
+    }
+
+	printf("%d ", num);
+}
+
+void questao13(int num) {
+    printf("%d ", num);
+
+	if(num > 0){
+        questao13(num - 1);
+    }
+}
+
+void questao14(int num) {
+	if(num > 0){
+		questao14(num - 1);
+    }
+
+	if(num % 2 == 0){
+        printf("%d ", num);
+    }
+}
+
+void questao15(int num) {
+	if(num % 2 == 0){
+        printf("%d ", num);
+    }
+
+	if(num > 0){
+        questao15(num - 1);
+    }
+}
