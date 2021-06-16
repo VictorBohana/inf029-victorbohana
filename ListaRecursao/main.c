@@ -11,12 +11,12 @@ int main(){
     testeQ7();
     testeQ8();
     testeQ10();
-    // testeQ11();
-    // testeQ12();
-    // testeQ13();
-    // testeQ14();
-    // testeQ15();
-    // testeQ16();
+    testeQ11();
+    testeQ12();
+    testeQ13();
+    testeQ14();
+    testeQ15();
+    testeQ16();
 }
 
 void printQuestao(char* questao){
@@ -60,7 +60,7 @@ void testeQ4(){
     printQuestao("Questao 04");
     int x[5] = {1, 2, 3, 4, 5};
     int tam = sizeof(x) / sizeof(int);
-    
+    printf("Somatorio de todos os elementos do vetor x: ");
     for(int i = 0; i < tam; i++){
         if(i != tam - 1){
             printf("%d + ", x[i]);
@@ -123,9 +123,7 @@ void testeQ8(){
     printQuestao("Questao 08");
     int k = 12;
     int n = 9;
-    printf("MDC de %d e %d = %d", k, n, questao8(k, n));
-
-    printf("\n");
+    printf("MDC de %d e %d = %d\n", k, n, questao8(k, n));
     printFinal();
 }
 
@@ -135,68 +133,61 @@ void testeQ10(){
     int n = 2022;
     int ocorrencias = 0;
     questao10(n, k, &ocorrencias);
-    printf("O numero %d ocorre em %d %d vezes", k, n, ocorrencias);
-
-    printf("\n");
+    printf("O numero %d ocorre em %d %d vezes\n", k, n, ocorrencias);
     printFinal();
 }
 
 void testeQ11(){
     printQuestao("Questao 11");
-    int k = 2;
-    int n = 2022;
-    int ocorrencias = 0;
-    questao10(n, k, &ocorrencias);
-    printf("O numero %d ocorre em %d %d vezes", k, n, ocorrencias);
+    int multiplicador = 6;
+    int multiplicando = 4;
+    printf("Multiplicando %d por %d usando soma: %d\n", multiplicando, multiplicador, questao11(multiplicando, multiplicador));
+    printFinal();
+}
+
+void testeQ12(){
+    printQuestao("Questao 12");
+    int num = 10;
+    printf("Numeros de 0 a %d em ordem crescente: ", num);
+    questao12(num);
 
     printf("\n");
     printFinal();
 }
 
-void testeQ11(){
-    printQuestao("Questao 11");
-    int k = 2;
-    int n = 2022;
-    int ocorrencias = 0;
-    questao10(n, k, &ocorrencias);
-    printf("O numero %d ocorre em %d %d vezes", k, n, ocorrencias);
+void testeQ13(){
+    printQuestao("Questao 13");
+    int num = 10;
+    printf("Numeros de 0 a %d em ordem decrescente: ", num);
+    questao13(num);
 
     printf("\n");
     printFinal();
 }
 
-void testeQ11(){
-    printQuestao("Questao 11");
-    int k = 2;
-    int n = 2022;
-    int ocorrencias = 0;
-    questao10(n, k, &ocorrencias);
-    printf("O numero %d ocorre em %d %d vezes", k, n, ocorrencias);
+void testeQ14(){
+    printQuestao("Questao 14");
+    int num = 10;
+    printf("Numeros pares de 0 a %d em ordem crescente: ", num);
+    questao14(num);
 
     printf("\n");
     printFinal();
 }
 
-void testeQ11(){
-    printQuestao("Questao 11");
-    int k = 2;
-    int n = 2022;
-    int ocorrencias = 0;
-    questao10(n, k, &ocorrencias);
-    printf("O numero %d ocorre em %d %d vezes", k, n, ocorrencias);
+void testeQ15(){
+    printQuestao("Questao 15");
+    int num = 10;
+    printf("Numeros pares de 0 a %d em ordem decrescente: ", num);
+    questao15(num);
 
     printf("\n");
     printFinal();
 }
 
-void testeQ11(){
-    printQuestao("Questao 11");
-    int k = 2;
-    int n = 2022;
-    int ocorrencias = 0;
-    questao10(n, k, &ocorrencias);
-    printf("O numero %d ocorre em %d %d vezes", k, n, ocorrencias);
-
-    printf("\n");
+void testeQ16(){
+    printQuestao("Questao 16");
+    int x = 5;
+    printf("O Fatorial duplo de %d = %d\n", x, questao16(x));
     printFinal();
 }

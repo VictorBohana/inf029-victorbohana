@@ -54,7 +54,7 @@ int questao6(int k, int n){
 
 void questao7(int *vetor, int contador){
     int aux;
-    if(contador < 100)
+    if(contador < 50)
     {
         aux = vetor[contador];
         vetor[contador] = vetor[99 - contador];
