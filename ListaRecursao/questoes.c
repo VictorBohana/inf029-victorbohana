@@ -8,6 +8,9 @@ int questao1(int num){
 }
 
 int questao2(int num){
+    if(num == 0){
+        return 0;
+    }
     if(num == 1 || num == 2) 
         return 1;
     else 
@@ -49,8 +52,8 @@ int questao6(int k, int n){
     }
 }
 
-void questao7(double *vetor, int contador){
-    double aux;
+void questao7(int *vetor, int contador){
+    int aux;
     if(contador < 100)
     {
         aux = vetor[contador];
@@ -60,11 +63,19 @@ void questao7(double *vetor, int contador){
     }
 }
 
-void questao10(int num, int numBusca, int *numOcorrencias){
+int questao8(int num1, int num2){
+    if(num2 == 0){
+        return num1;
+    } else {
+        return questao8(num2, num1 % num2);
+    }
+}
+
+int questao10(int num, int numBusca, int *numOcorrencias){
     if(num == 0) return 0;
     else{
         if(num % 10 == numBusca){
-            *numOcorrencias++;
+            *numOcorrencias = *numOcorrencias + 1;
         }
         num = num / 10;
         return questao10(num, numBusca, numOcorrencias);
@@ -115,5 +126,13 @@ void questao15(int num) {
 
 	if(num > 0){
         questao15(num - 1);
+    }
+}
+
+int questao16(int num) {
+	if(num == 1 || num % 2 == 0){
+        return 1;
+    } else{
+        return num * questao16(num - 2);
     }
 }
