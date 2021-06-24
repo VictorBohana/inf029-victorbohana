@@ -247,7 +247,7 @@ int getDadosDeTodasEstruturasAuxiliares(int vetorAux[]){
     for(int i = 0; i < TAM; i++)
         if(vetorPrincipal[i].espacosOcupados == 0) ++numeroDeEstruturasVazias;
 
-    if(numeroDeEstruturasVazias == TAM) retorno = TODAS_ESTRUTURAS_AUXILIARES_VAZIAS;
+    if(numeroDeEstruturasVazias == TAM - 1) retorno = TODAS_ESTRUTURAS_AUXILIARES_VAZIAS;
     else 
     {
         for(int i = 0; i < TAM; i++)
