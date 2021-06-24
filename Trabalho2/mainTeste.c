@@ -29,7 +29,7 @@ int main()
     testeListaEncadeada();
     finalizar();
 }
-int ligado = 1;
+int ligado = 0;
 void show_log(char *str)
 {
     if (ligado)
@@ -194,10 +194,8 @@ void testeRetornarTodosNumeros()
     printf("%d\n", vet2[7] == 27);
     printf("%d\n", vet2[8] == 34);
 
-    //[-6 0 1 3 6 8 12 27 34]
-
     printf("%d\n", getDadosDeTodasEstruturasAuxiliares(vet) == SUCESSO);
-    
+
     printf("%d\n", vet[0] == 3);
     printf("%d\n", vet[1] == 8);
     printf("%d\n", vet[2] == 0);
@@ -261,9 +259,8 @@ void testeListaEncadeada()
 {
     show_log("testeListaEncadeada()");
     int vet[10];
-    int tamanhoVet = 10;
     No *inicio = montarListaEncadeadaComCabecote();
-    getDadosListaEncadeadaComCabecote(inicio, vet, tamanhoVet);
+    getDadosListaEncadeadaComCabecote(inicio, vet);
 
     printf("%d\n", vet[0] == 3);
     printf("%d\n", vet[1] == 4);
